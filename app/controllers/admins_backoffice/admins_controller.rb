@@ -8,6 +8,10 @@ class AdminsBackoffice::AdminsController < AdminsBackofficeController
   end
 
   def update
+    if params[:admin][:password].blank? && params[:admin][:password_confirmation].blank?
+      params[:admin].extract!(:password, :password_confirmation)
+    end
+    
     @admin = Admin.find(params[:id])
     
     if @admin.update(set_admin)
